@@ -1,0 +1,24 @@
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    nav ul {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .hero-content h1 {
+        font-size: 40px;
+    }
+
+    .shop-hero h1 {
+        font-size: 40px;
+    }
+
+    .products {
+        padding: 20px;
+        grid-template-columns: 1fr;
+    }
+}
