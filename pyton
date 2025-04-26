@@ -1,0 +1,332 @@
+import zipfile
+import os
+
+# สร้างโฟลเดอร์สำหรับไฟล์เว็บไซต์
+site_folder = "/mnt/data/redrolls_site"
+os.makedirs(site_folder, exist_ok=True)
+
+# สร้างไฟล์ index.html
+index_html = """<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REDROLLS - Rule the Streets</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="responsive.css">
+</head>
+<body>
+    <header>
+        <div class="logo">REDROLLS</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>RULE <span>THE</span> STREETS</h1>
+            <p>Shop the wildest drops now!</p>
+            <div class="buttons">
+                <a href="#" class="btn btn-primary">Shop Now</a>
+                <a href="shop.html" class="btn btn-secondary">New Collection</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        © 2025 REDROLLS - All Rights Reserved
+    </footer>
+</body>
+</html>"""
+
+# สร้างไฟล์ shop.html
+shop_html = """<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>REDROLLS Shop - Wild Drops</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="responsive.css">
+</head>
+<body>
+    <header>
+        <div class="logo">REDROLLS</div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="shop-hero">
+        <h1>WILD DROPS</h1>
+        <p>Limited releases for real street kings.</p>
+    </section>
+
+    <section class="products">
+        <div class="product-card">
+            <img src="product1.jpg" alt="T-Shirt">
+            <h2>Graffiti Tee</h2>
+            <p>$49</p>
+            <a href="#" class="btn btn-primary">Add to Cart</a>
+        </div>
+
+        <div class="product-card">
+            <img src="product2.jpg" alt="Hoodie">
+            <h2>Street Hoodie</h2>
+            <p>$79</p>
+            <a href="#" class="btn btn-primary">Add to Cart</a>
+        </div>
+
+        <div class="product-card">
+            <img src="product3.jpg" alt="Cap">
+            <h2>Spray Cap</h2>
+            <p>$29</p>
+            <a href="#" class="btn btn-primary">Add to Cart</a>
+        </div>
+    </section>
+
+    <footer>
+        © 2025 REDROLLS - All Rights Reserved
+    </footer>
+</body>
+</html>"""
+
+# สร้างไฟล์ style.css
+style_css = """/* รีเซ็ต */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', 'Bebas Neue', sans-serif;
+    background-color: #111;
+    color: white;
+}
+
+/* Header */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
+    background-color: #111;
+}
+
+.logo {
+    font-size: 30px;
+    font-weight: bold;
+    color: red;
+    letter-spacing: 2px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    transition: 0.3s;
+}
+
+nav ul li a:hover {
+    color: silver;
+}
+
+/* Hero section */
+.hero {
+    height: 90vh;
+    background: url('graffiti-background.jpg') no-repeat center center/cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.hero-content h1 {
+    font-size: 60px;
+    font-weight: bold;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px red;
+}
+
+.hero-content h1 span {
+    color: silver;
+}
+
+.hero-content p {
+    font-size: 20px;
+    margin-bottom: 30px;
+}
+
+.buttons {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.btn {
+    padding: 12px 30px;
+    font-size: 16px;
+    border: none;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: 0.3s;
+    font-weight: bold;
+}
+
+.btn-primary {
+    background-color: red;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: darkred;
+}
+
+.btn-secondary {
+    background-color: silver;
+    color: black;
+}
+
+.btn-secondary:hover {
+    background-color: #ccc;
+}
+
+/* Footer */
+footer {
+    background-color: black;
+    text-align: center;
+    padding: 15px;
+    font-size: 14px;
+}
+
+/* Shop Hero */
+.shop-hero {
+    background: url('graffiti-wall.jpg') center/cover no-repeat;
+    padding: 100px 20px;
+    text-align: center;
+    color: white;
+}
+
+.shop-hero h1 {
+    font-size: 60px;
+    font-weight: bold;
+    text-shadow: 2px 2px red;
+    animation: spray 2s infinite alternate;
+}
+
+.shop-hero p {
+    font-size: 20px;
+    margin-top: 10px;
+}
+
+/* Products */
+.products {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    padding: 50px;
+    background: #111;
+}
+
+.product-card {
+    background: #222;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    transition: transform 0.3s;
+}
+
+.product-card img {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.product-card h2 {
+    margin-bottom: 10px;
+    font-size: 22px;
+}
+
+.product-card p {
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.product-card:hover {
+    transform: scale(1.05);
+}
+
+/* Spray Animation */
+@keyframes spray {
+    0% { text-shadow: 2px 2px red; transform: rotate(-2deg); }
+    100% { text-shadow: 4px 4px silver; transform: rotate(2deg); }
+}
+"""
+
+# สร้างไฟล์ responsive.css
+responsive_css = """@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    nav ul {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .hero-content h1,
+    .shop-hero h1 {
+        font-size: 40px;
+    }
+
+    .products {
+        padding: 20px;
+        grid-template-columns: 1fr;
+    }
+}
+"""
+
+# บันทึกไฟล์ทั้งหมดลงในโฟลเดอร์
+with open(os.path.join(site_folder, "index.html"), "w") as f:
+    f.write(index_html)
+
+with open(os.path.join(site_folder, "shop.html"), "w") as f:
+    f.write(shop_html)
+
+with open(os.path.join(site_folder, "style.css"), "w") as f:
+    f.write(style_css)
+
+with open(os.path.join(site_folder, "responsive.css"), "w") as f:
+    f.write(responsive_css)
+
+# สร้าง ZIP ไฟล์
+zip_path = "/mnt/data/REDROLLS_website.zip"
+with zipfile.ZipFile(zip_path, "w") as zipf:
+    for root, dirs, files in os.walk(site_folder):
+        for file in files:
+            file_path = os.path.join(root, file)
+            zipf.write(file_path, os.path.relpath(file_path, site_folder))
+
+zip_path
